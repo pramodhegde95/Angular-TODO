@@ -1,1 +1,39 @@
-/* You can add global styles to this file, and also import other style files */
+/**
+* A global style sheet to setup the initial look of the application.
+* All other styles should be on a component basis
+* 
+* ## DONT EDIT
+*/
+
+
+html, body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  height: 75px;
+  background-color: #1B779E;
+  color: white;
+}
+
+main {
+  flex: auto;
+  background-color: #fff;
+}
+
+footer {
+  padding: 15px 30px;
+  vertical-align: middle;
+  font-size: 14px;
+  background-color: #1B779E;
+  color: white;
+}

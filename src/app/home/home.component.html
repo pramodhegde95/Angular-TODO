@@ -1,0 +1,95 @@
+
+<h2 align="center">Todos</h2>
+<table id="mytable" class="table table-bordred table-striped">
+  <thead>
+  <th>Mark Completed</th>
+  <th>Task Title</th>
+  <th>Task View</th>
+  <th>Edit</th>
+  <th>Delete</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let task of allTasks" id="taskRow">
+      <td> <input type="checkbox" id="taskCheckBox" (mousedown)="taskMarkComplete(task.id)" /></td>
+      <td>{{task.title}}</td>
+      <td><p data-placement="top" data-toggle="tooltip" title="View"><button class="btn btn-primary btn-xs" type="button" (click)="loadTaskToView(task.id)"><span>View/Hide</span></button></p></td>
+      <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs"type="button" (click)="loadTaskToEdit(task.id)"><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+      <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" (click)="deleteTask(task.id)"><span class="glyphicon glyphicon-trash"></span></button></p></td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+<div id="desc" style="display: none" >
+  <form [formGroup]="taskFormNew" (ngSubmit)="onTaskFormSubmit()">
+    <h2> Task Details Below : </h2><br />
+    <span> Title: </span><br />
+    <input type="text" formControlName="title" /><br />
+    <span> Description: </span><br />
+    <input type="text" maxlength="1000" formControlName="description" /><br />
+    <span> Due: </span><br />
+    <input type="text" maxlength="1000" formControlName="due" /><br />
+    <span> Done: </span><br />
+    <input type="text" maxlength="1000" formControlName="done" />
+  </form>
+</div>
+
+
+    <button class="btn btn-primary btn-md addButton" type="button" value="" (click)="taskAddUpdate()" >ADD Task</button>
+
+  <div id="addTaskDiv" style="display:none" >
+    <form [formGroup]="taskForm" (ngSubmit)="onTaskFormSubmit()">
+      <table id="addTaskTable" class="table table-bordred table-striped">
+        <tr>
+          <td>Enter Title</td>
+          <td>
+            <input formControlName="title" data-toggle="tooltip" title="Enter Title">
+            <label *ngIf="taskForm.get('title').invalid && processValidation" class="alert alert-danger" role="alert"> Empty Field </label>
+          </td>
+        </tr>
+        <tr>
+          <td>Enter Description</td>
+          <td>
+            <input formControlName="description" data-toggle="tooltip" title="Enter desciprion">
+            <label *ngIf="taskForm.get('description').invalid && processValidation" class="alert alert-danger" role="alert"> Empty Field </label>
+          </td>
+        </tr>
+        <tr>
+          <td>Enter Due date</td>
+          <td>
+            <input formControlName="due" data-toggle="tooltip" title="Enter date" >
+            <label *ngIf="taskForm.get('due').invalid && processValidation" class="alert alert-danger" role="alert"> Empty Field </label>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <button class="btn btn-primary btn-sm addButton" *ngIf="!tasksIdToUpdate">CREATE</button>
+            <button class="btn btn-primary btn-sm updateButton" *ngIf="tasksIdToUpdate">UPDATE</button>
+            <button class="btn btn-primary btn-sm backButton" (click)="backToCreateTask()" *ngIf="tasksIdToUpdate">BACK</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+    
+    <br />
+    <div *ngIf="statusCode; else processing">
+      <div *ngIf="statusCode === 201" class="alert alert-success" role="alert">
+        Task added successfully.
+      </div>
+      <div *ngIf="statusCode === 409" class="alert alert-danger" role="alert">
+        Task already exists.
+      </div>
+      <div *ngIf="statusCode === 200" class="alert alert-success" role="alert">
+        Task updated successfully.
+      </div>
+      <div *ngIf="statusCode === 204" class="alert alert-success" role="alert">
+        Task deleted successfully.
+      </div>
+    </div>
+  </div>
+
+
+
+
+
